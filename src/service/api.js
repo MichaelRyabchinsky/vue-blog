@@ -1,12 +1,22 @@
 import axios from "axios";
 
-const baseUrl = process.env.VUE_APP_API;
+const baseURL = process.env.VUE_APP_API;
 
 const api = axios.create({
-  baseUrl,
+  baseURL,
   headers: {
     accept: "application/json",
   },
+});
+
+api.interceptors.request.use(function (config) {
+  let token = localStorage.getItem("token");
+  if (token) {
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+    };
+  }
+  return config;
 });
 
 export default api;
