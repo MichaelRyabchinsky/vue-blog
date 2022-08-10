@@ -23,5 +23,8 @@ export default {
       const user = await api.get("auth/user");
       commit("setUser", user.data);
     },
+    async register(_, payload) {
+      await api.post("users", payload);
+    },
   },
 };

@@ -1,6 +1,6 @@
 <template>
-  <div class="login">
-    <form @submit.prevent="handleSubmit" class="login-form">
+  <div class="register">
+    <form @submit.prevent="handleSubmit" class="register-form">
       <input
         type="text"
         placeholder="Enter email"
@@ -13,6 +13,12 @@
         v-model="password"
         class="form-item"
       />
+      <input
+        type="text"
+        placeholder="Enter name"
+        v-model="name"
+        class="form-item"
+      />
       <button type="submit" class="form-btn">Submit</button>
     </form>
   </div>
@@ -22,34 +28,39 @@
 import { mapActions } from "vuex";
 
 export default {
-  name: "LoginForm",
+  name: "RegisterForm",
   data() {
     return {
-      email: "",
+      name: "",
       password: "",
+      email: "",
     };
   },
   methods: {
-    ...mapActions(["login", "fetchUser"]),
+    ...mapActions(["register"]),
     async handleSubmit() {
       const payload = {
         email: this.email,
         password: this.password,
+        name: this.name,
+        extra_details: "",
+        skills: "",
+        profession: "",
+        details: "",
       };
-      await this.login(payload);
-      await this.fetchUser();
-      this.$router.push({ name: "home" });
+      await this.register(payload);
+      this.$router.push({ name: "login" });
     },
   },
 };
 </script>
 
 <style lang="stylus" scoped>
-.login
+.register
   display flex
   justify-content center
 
-.login-form
+.register-form
   display flex
   flex-direction column
 
